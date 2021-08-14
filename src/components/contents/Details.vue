@@ -2,7 +2,7 @@
 <section class="container-2">
   <div class="contents-2">
       <div class="details">
-        <div class="dt-title">{{cutString(100, article.title)}}</div>
+        <div class="dt-title">{{cutString(150, article.title)}}</div>
         <div class="dt-sub">{{cutString(300, article.contents)}}</div>
         <div class="dt-user">created_at ({{moment(article.created_at).format('YYYY-MM-DD')}})</div>
       </div> 

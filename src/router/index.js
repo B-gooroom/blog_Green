@@ -6,7 +6,7 @@ import Details from '../components/contents/Details.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: '/details' },
+  { path: '/', redirect: '/main' },
   {
     path: '/main',
     name: 'Main',

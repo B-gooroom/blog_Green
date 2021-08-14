@@ -28,7 +28,7 @@
             </div>
             <div class="category-body">
               <div class="ct-title">{{cutString(50, article.title)}}</div>
-              <div class="ct-sub">{{cutString(130, article.contents)}}</div>
+              <div class="ct-sub">{{cutString(70, article.contents)}}</div>
             </div>
           </div>
         </router-link>

@@ -12,6 +12,9 @@ export default new Vuex.Store({
   mutations: {
   },
   actions: {
+    axiosError(thisStore, error) {
+      console.error(error.response || error.message || error)
+    }
   },
   modules: {
     articles: moduleArticles,

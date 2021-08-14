@@ -13,19 +13,19 @@
         <div class="empty"></div>
         <button class="filter"><span class="filter-name">필터</span></button>
       </div>
-      <div>
-        <div class="category">
+      <div v-if="categories.length">
+        <div class="category" v-for="(article, index) in articles" :key="index">
           <div class="category-name">
-            <div class="ct-name">category-name</div>
-            <div class="ct-id">id</div>
+            <div class="ct-name">{{_.find(categories, {id: article.category_id}).name}}</div>
+            <div class="ct-id">{{_.find(categories, {id: article.category_id}).id}}</div>
           </div>
           <div class="category-used">
-            <div class="ct-user">user_id</div>
-            <div class="ct-date">| created_at(2021-08-13)</div>
+            <div class="ct-user">{{article.user_id}}</div>|
+            <div class="ct-date">created_at ({{moment(article.created_at).format('YYYY-MM-DD')}})</div>
           </div>
           <div class="category-body">
-            <div class="ct-title">Title Title Title Title Title Title Title Title</div>
-            <div class="ct-sub">contents contents contents contents contents contents</div>
+            <div class="ct-title">{{cutString(50, article.title)}}</div>
+            <div class="ct-sub">{{cutString(130, article.contents)}}</div>
           </div>
         </div>
         <div class="sponsored">
@@ -44,4 +44,40 @@
 </template>
 
 <script>
+import _ from 'lodash'
+import moment from 'moment'
+
+export default {
+  computed: {
+    articles() {
+      console.log(this.$store.state.articles)
+      return this.$store.state.articles.articles.data
+    },
+    categories() {
+      console.log(this.$store.state.categories)
+      return this.$store.state.categories.categories
+    },
+    _() {
+      return _
+    },
+    moment() {
+      return moment
+    }
+  },
+  methods: {
+    articlesCreate() {
+      this.$store.dispatch('articlesCreate')
+    },
+    cutString(length, str) {
+      if (str.length > length) {
+        str = str.substring(0, length) + '...'
+      }
+      return str
+    }
+  },
+  created() {
+      this.$store.dispatch('articlesRead')
+      this.$store.dispatch('categoriesRead')
+  }
+}
 </script>

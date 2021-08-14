@@ -14,20 +14,25 @@
         <button class="filter"><span class="filter-name">필터</span></button>
       </div>
       <div v-if="categories.length">
-        <div class="category" v-for="(article, index) in articles" :key="index">
-          <div class="category-name">
-            <div class="ct-name">{{_.find(categories, {id: article.category_id}).name}}</div>
-            <div class="ct-id">{{_.find(categories, {id: article.category_id}).id}}</div>
+        <router-link :to="{name: 'Details', params: {id: article.id}}"
+          v-for="(article, index) in articles" :key="index"
+        >
+          <div class="category">
+            <div class="category-name">
+              <div class="ct-name">{{_.find(categories, {id: article.category_id}).name}}</div>
+              <div class="ct-id">{{_.find(categories, {id: article.category_id}).id}}</div>
+            </div>
+            <div class="category-used">
+              <div class="ct-user">{{article.user_id}}</div>|
+              <div class="ct-date">created_at ({{moment(article.created_at).format('YYYY-MM-DD')}})</div>
+            </div>
+            <div class="category-body">
+              <div class="ct-title">{{cutString(50, article.title)}}</div>
+              <div class="ct-sub">{{cutString(130, article.contents)}}</div>
+            </div>
           </div>
-          <div class="category-used">
-            <div class="ct-user">{{article.user_id}}</div>|
-            <div class="ct-date">created_at ({{moment(article.created_at).format('YYYY-MM-DD')}})</div>
-          </div>
-          <div class="category-body">
-            <div class="ct-title">{{cutString(50, article.title)}}</div>
-            <div class="ct-sub">{{cutString(130, article.contents)}}</div>
-          </div>
-        </div>
+        </router-link>
+
         <div class="sponsored">
           <div class="sponsored-name">sponsored</div>
           <div class="sponsored-body">

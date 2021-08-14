@@ -2,24 +2,18 @@
 <section class="container-2">
   <div class="contents-2">
       <div class="details">
-        <div class="dt-title">Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title T itle Title Title Title Title Title Title Title Title Title Title Title Title Title</div>
-        <div class="dt-sub">contents contents contents contents contents contents contents contents contents contents contents contents contents contents contents conte nts contents contents contents contents contents contents contents contents contents contents contents contents contents contents contents co ntents contents contents contents contents contents contents contents contents contents contents</div>
-        <div class="dt-user">created_at(2020-02-02)</div>
+        <div class="dt-title">{{cutString(100, article.title)}}</div>
+        <div class="dt-sub">{{cutString(300, article.contents)}}</div>
+        <div class="dt-user">created_at ({{moment(article.created_at).format('YYYY-MM-DD')}})</div>
       </div> 
     <div class="reply">
     <div class="reply-count">답변</div>
-    <div class="reply-counter">2</div>
-      <div class="reply-block">
-        <div class="rp-user">reply_user_name</div>
+    <div class="reply-counter">{{article.reply.length}}</div>
+      <div class="reply-block" v-for="(reply, index) in article.reply" :key="index">
+        <div class="rp-user">{{reply.user.name}}</div>
         <div class="rp-line"></div>
-        <div class="rp-sub">contents contents contents contents contents contents contents contents contents contents contents contents contents contents contents conte nts contents contents contents contents contents contents contents contents contents contents contents contents contents contents contents co ntents contents contents contents contents contents contents contents contents contents contents</div>
-        <div class="rp-date">created_at(2020-02-02)</div>
-      </div>
-      <div class="reply-block">
-        <div class="rp-user">reply_user_name</div>
-        <div class="rp-line"></div>
-        <div class="rp-sub">contents contents contents contents contents contents contents contents contents contents contents contents contents contents contents conte nts contents contents contents contents contents contents contents contents contents contents contents contents contents contents contents co ntents contents contents contents contents contents contents contents contents contents contents</div>
-        <div class="rp-date">created_at(2020-02-02)</div>
+        <div class="rp-sub">{{reply.contents}}</div>
+        <div class="rp-date">created_at ({{moment(reply.created_at).format('YYYY-MM-DD')}})</div>
       </div>
     </div>
   </div>
@@ -28,4 +22,35 @@
 </template>
 
 <script>
+import _ from 'lodash'
+import moment from 'moment'
+
+export default {
+  computed: {
+    article() {
+      console.log(this.$store.state.article)
+      return this.$store.state.articles.article
+    },
+    _() {
+      return _
+    },
+    moment() {
+      return moment
+    }
+  },
+  methods: {
+    articlesCreate() {
+      this.$store.dispatch('articlesCreate')
+    },
+    cutString(length, str = '') {
+      if (str.length > length) {
+        str = str.substring(0, length) + '...'
+      }
+      return str
+    }
+  },
+  created() {
+    this.$store.dispatch('articleRead', this.$route.params.id)
+  }
+}
 </script>

@@ -9,7 +9,8 @@ export const moduleArticles = {
     article: {
       reply: []
     },
-    ord: 'asc'
+    ord: 'asc',
+    promise: []
   },
   mutations: {
     articlesRead(state, articles) {
@@ -21,15 +22,23 @@ export const moduleArticles = {
   },
   actions: {
     articlesRead(thisStore) {
-      let categoriesChecked = ''
-      categoriesChecked += moduleCategories.state.selectedCategories.apple ? '&category[]=1' : ''
-      categoriesChecked += moduleCategories.state.selectedCategories.banana ? '&category[]=2' : ''
-      categoriesChecked += moduleCategories.state.selectedCategories.coconut ? '&category[]=3' : ''
-      axios.get(`https://problem.comento.kr/api/list?page=1&ord=${thisStore.state.ord}&limit=10${categoriesChecked}`).then(function (response) {
-        console.log('Done articlesRead', response)
-        thisStore.commit('articlesRead', response.data)
+      thisStore.state.promise[1] = new Promise(function (resolve, reject) {
+        let categoriesChecked = ''
+        categoriesChecked += moduleCategories.state.selectedCategories.apple ? '&category[]=1' : ''
+        categoriesChecked += moduleCategories.state.selectedCategories.banana ? '&category[]=2' : ''
+        categoriesChecked += moduleCategories.state.selectedCategories.coconut ? '&category[]=3' : ''
+        axios.get(`https://problem.comento.kr/api/list?page=1&ord=${thisStore.state.ord}&limit=10${categoriesChecked}`).then(function (response) {
+          console.log('Done articlesRead', response)
+          resolve(response.data)
+        }).catch(function (error) {
+          thisStore.dispatch('axiosError', error)
+          reject(error)
+        })
+      })
+      Promise.all(thisStore.state.promise).then(function (result) {
+        thisStore.commit('articlesRead', result[1])
       }).catch(function (error) {
-        thisStore.dispatch('axiosError', error)
+        console.error(error);
       })
     },
     articleRead(thisStore, id) {

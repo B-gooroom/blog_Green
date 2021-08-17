@@ -24,32 +24,35 @@
         <button class="filter" @click="showModal = !showModal"><span class="filter-name">필터</span></button>
       </div>
       <div v-if="categories.length">
-        <router-link :to="{name: 'Details', params: {id: article.id}}"
-          v-for="(article, index) in articles" :key="index"
+        <div
+          v-for="(articleAd, index) in articlesAds" :key="index"
         >
-          <div class="category">
-            <div class="category-name">
-              <div class="ct-name">{{_.find(categories, {id: article.category_id}).name}}</div>
-              <div class="ct-id">{{_.find(categories, {id: article.category_id}).id}}</div>
+          <router-link :to="{name: 'Details', params: {id: articleAd.id}}"
+            v-if="articleAd.user_id"
+          >
+            <div class="category">
+              <div class="category-name">
+                <div class="ct-name">{{_.find(categories, {id: articleAd.category_id}).name}}</div>
+                <div class="ct-id">{{_.find(categories, {id: articleAd.category_id}).id}}</div>
+              </div>
+              <div class="category-used">
+                <div class="ct-user">{{articleAd.user_id}}</div>|
+                <div class="ct-date">created_at ({{moment(articleAd.created_at).format('YYYY-MM-DD')}})</div>
+              </div>
+              <div class="category-body">
+                <div class="ct-title">{{cutString(50, articleAd.title)}}</div>
+                <div class="ct-sub">{{cutString(70, articleAd.contents)}}</div>
+              </div>
             </div>
-            <div class="category-used">
-              <div class="ct-user">{{article.user_id}}</div>|
-              <div class="ct-date">created_at ({{moment(article.created_at).format('YYYY-MM-DD')}})</div>
-            </div>
-            <div class="category-body">
-              <div class="ct-title">{{cutString(50, article.title)}}</div>
-              <div class="ct-sub">{{cutString(70, article.contents)}}</div>
-            </div>
-          </div>
-        </router-link>
-
-        <div class="sponsored">
-          <div class="sponsored-name">sponsored</div>
-          <div class="sponsored-body">
-            <div class="sp-img"></div>
-            <div class="sp-body">
-              <div class="sp-title">Title Title Title Title Title Title Title Title</div>
-              <div class="sp-sub">contents contents contents contents contents contents</div>
+          </router-link>
+          <div class="sponsored" v-else>
+            <div class="sponsored-name">sponsored</div>
+            <div class="sponsored-body">
+              <div class="sp-img"><img :src="`https://cdn.comento.kr/assignment/${articleAd.img}`"></div>
+              <div class="sp-body">
+                <div class="sp-title">{{cutString(50, articleAd.title)}}</div>
+                <div class="sp-sub">{{cutString(100, articleAd.contents)}}</div>
+              </div>
             </div>
           </div>
         </div>
@@ -85,6 +88,21 @@ export default {
     $articles() {
       return this.$store.state.articles
     },
+    ads() {
+      return this.$store.state.ads.ads
+    },
+    articlesAds() {
+      const articlesAds = []
+      const times = 3
+      for (let index = 0; index < this.articles.length; index++) {
+        articlesAds.push(this.articles[index])
+        if (index % times === times - 1) {
+          const adsIndex = Math.floor(index / times) % times;
+          articlesAds.push(this.ads[adsIndex])
+        }
+      }
+      return articlesAds
+    },
     _() {
       return _
     },
@@ -110,6 +128,7 @@ export default {
   created() {
       this.$store.dispatch('articlesRead')
       this.$store.dispatch('categoriesRead')
+      this.$store.dispatch('adsRead')
   }
 }
 </script>

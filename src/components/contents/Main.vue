@@ -50,8 +50,8 @@
             <div class="sponsored-body">
               <div class="sp-img"><img :src="`https://cdn.comento.kr/assignment/${articleAd.img}`"></div>
               <div class="sp-body">
-                <div class="sp-title">{{cutString(50, articleAd.title)}}</div>
-                <div class="sp-sub">{{cutString(100, articleAd.contents)}}</div>
+                <div class="sp-title">{{cutString(100, articleAd.title)}}</div>
+                <div class="sp-sub">{{cutString(200, articleAd.contents)}}</div>
               </div>
             </div>
           </div>

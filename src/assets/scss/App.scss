@@ -311,6 +311,9 @@ header {
       height: 179px;
       border: 1px solid #e1e4e7;
       opacity: 1;
+      img {
+        width: 100%;
+      }
     }
     .sp-body {
       display: inline-block;
@@ -321,6 +324,7 @@ header {
         left: 1035px;
         width: 463px;
         height: 55px;
+        margin-bottom: 10px;
         text-align: left;
         font: normal normal bold 18px/28px SpoqaHanSans;
         letter-spacing: 0px;
@@ -332,6 +336,7 @@ header {
         left: 1035px;
         width: 465px;
         height: 99px;
+        margin-top: 5px;
         color: var(--unnamed-color-495057);
         text-align: left;
         font: normal normal normal 16px/25px SpoqaHanSans;

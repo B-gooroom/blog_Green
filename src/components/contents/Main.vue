@@ -8,8 +8,18 @@
     
     <section class="contents">
       <div class="contents-top">
-        <div class="asc"><div class="circle"></div>오름차순</div>
-        <div class="desc"><div class="circle-d"></div>내림차순</div>
+        <div
+          :class="{active: $articles.ord === 'asc', default: $articles.ord !== 'asc'}"
+          @click="setArticlesOrder('asc')"
+        ><div class="circle"
+          :class="{circle: $articles.ord === 'asc', 'circle-d': $articles.ord !== 'asc'}"
+        ></div>오름차순</div>
+        <div 
+          :class="{active: $articles.ord === 'desc', default: $articles.ord !== 'desc'}"
+          @click="setArticlesOrder('desc')"
+        ><div class="circle-d"
+          :class="{circle: $articles.ord === 'desc', 'circle-d': $articles.ord !== 'desc'}"
+        ></div>내림차순</div>
         <div class="empty"></div>
         <button class="filter" @click="showModal = !showModal"><span class="filter-name">필터</span></button>
       </div>
@@ -72,6 +82,9 @@ export default {
       console.log(this.$store.state.categories)
       return this.$store.state.categories.categories
     },
+    $articles() {
+      return this.$store.state.articles
+    },
     _() {
       return _
     },
@@ -88,6 +101,10 @@ export default {
         str = str.substring(0, length) + '...'
       }
       return str
+    },
+    setArticlesOrder(ascDesc) {
+      this.$articles.ord = ascDesc
+      this.$store.dispatch('articlesRead')
     }
   },
   created() {

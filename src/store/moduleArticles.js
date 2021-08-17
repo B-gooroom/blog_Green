@@ -8,7 +8,8 @@ export const moduleArticles = {
     },
     article: {
       reply: []
-    }
+    },
+    ord: 'asc'
   },
   mutations: {
     articlesRead(state, articles) {
@@ -24,7 +25,7 @@ export const moduleArticles = {
       categoriesChecked += moduleCategories.state.selectedCategories.apple ? '&category[]=1' : ''
       categoriesChecked += moduleCategories.state.selectedCategories.banana ? '&category[]=2' : ''
       categoriesChecked += moduleCategories.state.selectedCategories.coconut ? '&category[]=3' : ''
-      axios.get(`https://problem.comento.kr/api/list?page=1&ord=asc&limit=10${categoriesChecked}`).then(function (response) {
+      axios.get(`https://problem.comento.kr/api/list?page=1&ord=${thisStore.state.ord}&limit=10${categoriesChecked}`).then(function (response) {
         console.log('Done articlesRead', response)
         thisStore.commit('articlesRead', response.data)
       }).catch(function (error) {

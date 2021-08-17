@@ -32,7 +32,7 @@ input[type="text"] {
   display: block;
 }
 .empty {
-  width: 750px;
+  width: 745px;
 }
 
 header {
@@ -140,6 +140,7 @@ header {
       letter-spacing: 0px;
       color: #adb5bd;
       opacity: 1;
+      margin-right: 7px;
       .circle-d {
         display: inline-block;
         top: 129px;

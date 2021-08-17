@@ -3,7 +3,10 @@ import axios from 'axios'
 export const moduleCategories = {
   state: {
     categories: [],
-    category: {
+    selectedCategories: {
+      apple: true,
+      banana: true,
+      coconut: true
     }
   },
   mutations: {

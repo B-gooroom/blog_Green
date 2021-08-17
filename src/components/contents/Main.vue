@@ -11,7 +11,7 @@
         <div class="asc"><div class="circle"></div>오름차순</div>
         <div class="desc"><div class="circle-d"></div>내림차순</div>
         <div class="empty"></div>
-        <button class="filter"><span class="filter-name">필터</span></button>
+        <button class="filter" @click="showModal = !showModal"><span class="filter-name">필터</span></button>
       </div>
       <div v-if="categories.length">
         <router-link :to="{name: 'Details', params: {id: article.id}}"
@@ -45,14 +45,24 @@
         </div>
       </div>
     </section>
+    <Modal v-if="showModal"></Modal>
   </div>
 </template>
 
 <script>
 import _ from 'lodash'
 import moment from 'moment'
+import Modal from './Modal.vue'
 
 export default {
+  components: {
+    Modal
+  },
+  data () {
+    return {
+      showModal: false
+    }
+  },
   computed: {
     articles() {
       console.log(this.$store.state.articles)

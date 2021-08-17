@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { moduleCategories } from './moduleCategories'
 
 export const moduleArticles = {
   state: {
@@ -19,8 +20,11 @@ export const moduleArticles = {
   },
   actions: {
     articlesRead(thisStore) {
-      // const category = JSON.stringify([0, 1, 2])
-      axios.get(`https://problem.comento.kr/api/list?page=1&ord=asc&limit=10&category[]=1&category[]=2&category[]=3`).then(function (response) {
+      let categoriesChecked = ''
+      categoriesChecked += moduleCategories.state.selectedCategories.apple ? '&category[]=1' : ''
+      categoriesChecked += moduleCategories.state.selectedCategories.banana ? '&category[]=2' : ''
+      categoriesChecked += moduleCategories.state.selectedCategories.coconut ? '&category[]=3' : ''
+      axios.get(`https://problem.comento.kr/api/list?page=1&ord=asc&limit=10${categoriesChecked}`).then(function (response) {
         console.log('Done articlesRead', response)
         thisStore.commit('articlesRead', response.data)
       }).catch(function (error) {

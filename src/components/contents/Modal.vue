@@ -6,15 +6,15 @@
         <div class="modal-body">
           <div class="check">
             <input type="checkbox" id="cb1" v-model="selectedCategories.apple">
-            <label for="cb1"><span>category_name</span></label>
+            <label for="cb1"><span>apple</span></label>
           </div>
           <div class="check">
             <input type="checkbox" id="cb2" v-model="selectedCategories.banana">
-            <label for="cb2"><span>category_name</span></label>
+            <label for="cb2"><span>banana</span></label>
           </div>
           <div class="check">
             <input type="checkbox" id="cb3" v-model="selectedCategories.coconut">
-            <label for="cb3"><span>category_name</span></label>
+            <label for="cb3"><span>coconut</span></label>
           </div>
         </div>
         <div class="modal-footer">

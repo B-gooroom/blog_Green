@@ -1,4 +1,4 @@
-## comento-jungsaemi
+## blog_sean.j
 
 [#1] markup & router
 - xd 파일 참고해서 markup(css) 작업! 

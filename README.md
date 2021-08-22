@@ -1,7 +1,7 @@
 ## comento-jungsaemi
 
 [#1] markup & router
-- 공유주셨던 xd 파일 참고해서 markup(css) 작업! 
+- xd 파일 참고해서 markup(css) 작업! 
 - 필요없는 기본 이미지/파일 등 삭제후에 html/css markup
 - markup 정리 후에 router & component 페이지 세팅
 - router : Main / Details 2페이지
